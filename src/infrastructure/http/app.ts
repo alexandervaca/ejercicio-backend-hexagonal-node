@@ -55,6 +55,8 @@ export function createApp(container: Container): express.Express {
     authMiddleware(container.tokenService),
     async (req: Request, res: Response, next: NextFunction) => {
       try {
+        //console.log('req.params: ', req.params);
+        //console.log('req.body: ', req.body);
         const { id } = req.params;
         const { content } = req.body ?? {};
         const result = await container.sendMessage.execute({
@@ -63,6 +65,7 @@ export function createApp(container: Container): express.Express {
         });
         res.status(201).json(result);
       } catch (e) {
+        console.error('Error to container.sendMessage.execute: ', e);
         next(e);
       }
     }

@@ -36,6 +36,8 @@ export class SendMessageUseCase {
     if (conversation === null) {
       throw new NotFoundError('Conversation');
     }
+    //console.log('conversation: ', conversation);
+    //console.log('input: ', input);
     const content = new MessageContent(input.content);
     const messageId = this.idGenerator.generate();
     const message = new Message(

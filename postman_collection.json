@@ -1,0 +1,102 @@
+{
+  "info": {
+    "name": "Ejercicio Backend Hexagonal Node",
+    "description": "Colección de endpoints para probar la API hexagonal con Node.js",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Conversations - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/conversations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["conversations"]
+        }
+      }
+    },
+    {
+      "name": "Conversations - Get Messages",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/conversations/1/messages",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["conversations", "1", "messages"]
+        }
+      }
+    },
+    {
+      "name": "Conversations - Send Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Hola desde Postman\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/conversations/1/messages",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["conversations", "1", "messages"]
+        }
+      }
+    }
+  ]
+}
