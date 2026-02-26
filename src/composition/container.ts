@@ -1,4 +1,5 @@
 import type { AppConfig } from './config.js';
+import type { ITelegramService } from '../domain/ports/ITelegramService.js';
 import { PrismaClient } from '@prisma/client';
 import { PrismaUserRepository } from '../infrastructure/persistence/PrismaUserRepository.js';
 import { PrismaConversationRepository } from '../infrastructure/persistence/PrismaConversationRepository.js';
@@ -27,14 +28,20 @@ export interface Container {
   stopTelegramPolling: () => void;
 }
 
-export function createContainer(config: AppConfig): Container {
-  const prisma = new PrismaClient({
+/** Opcional: para tests de integración (misma BD, Telegram sin red). */
+export interface ContainerOverrides {
+  prisma?: PrismaClient;
+  telegramService?: ITelegramService;
+}
+
+export function createContainer(config: AppConfig, overrides?: ContainerOverrides): Container {
+  const prisma = overrides?.prisma ?? new PrismaClient({
     datasources: { db: { url: config.databaseUrl } },
   });
   const userRepo = new PrismaUserRepository(prisma);
   const conversationRepo = new PrismaConversationRepository(prisma);
   const messageRepo = new PrismaMessageRepository(prisma);
-  const telegramService = new TelegramApiAdapter(config.botToken);
+  const telegramService = overrides?.telegramService ?? new TelegramApiAdapter(config.botToken);
   const tokenService = new JwtTokenService(config.jwtSecret);
   const passwordHasher = new BcryptPasswordHasher();
   const idGenerator = new CryptoIdGenerator();

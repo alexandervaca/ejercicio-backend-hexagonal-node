@@ -100,6 +100,12 @@ Si aparece `Telegram API 404` o `token inválido`, revisa que el token en `.env`
   npm test
   ```
 
+- **Solo tests de integración** (BD de test en `prisma/test-integration.sqlite`):
+  ```bash
+  npm run test:integration
+  ```
+  Los tests de integración ejecutan `prisma db push` contra esa BD automáticamente.
+
 ---
 
 ## Variables de entorno
